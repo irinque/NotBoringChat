@@ -1,0 +1,30 @@
+name: NotBoringChat
+version: '${project.version}'
+main: me.irinque.notboringchat.Main
+api-version: '1.20'
+authors: [irinque]
+website: https://t.me/irinque
+commands:
+  message:
+    description: "Сообщение конкретному игроку;"
+    aliases:
+      - msg
+      - tell
+      - w
+      - tellraw
+  setprefix:
+    description: "Set player prefix"
+    aliases:
+      - sp
+  removeprefix:
+    description: "Remove player prefix"
+    aliases:
+      - rp
+  setcolor:
+    description: "Set player nickname color"
+    aliases:
+      - sc
+  reload-nbc:
+    description: "Reload plugin config"
+    aliases:
+      - rd
