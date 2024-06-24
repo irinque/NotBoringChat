@@ -1,6 +1,7 @@
 package me.irinque.notboringchat;
 
 import me.irinque.notboringchat.handlers.JoinHandler;
+import me.irinque.notboringchat.handlers.PlayerDeathHandler;
 import me.irinque.notboringchat.handlers.QuitHandler;
 import me.irinque.notboringchat.handlers.MessageHandler;
 import me.irinque.notboringchat.loaders.*;
@@ -44,6 +45,7 @@ public final class Main extends JavaPlugin
         getServer().getPluginManager().registerEvents(new MessageHandler(), this);
         getServer().getPluginManager().registerEvents(new JoinHandler(), this);
         getServer().getPluginManager().registerEvents(new QuitHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathHandler(), this);
 
         Bukkit.getScheduler().runTaskAsynchronously(this, new ConfigLoader());
         Bukkit.getScheduler().runTaskAsynchronously(this, new CommandsLoader());

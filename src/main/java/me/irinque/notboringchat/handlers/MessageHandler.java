@@ -36,7 +36,6 @@ public class MessageHandler implements Listener
                     if (target.getLocation().distance(player.getLocation()) <= radius_localchat & !target.getUniqueId().equals(player.getUniqueId()))
                     {
                         Listeners++;
-                        player.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
                         target.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
                     }
 
@@ -44,6 +43,10 @@ public class MessageHandler implements Listener
                 if (Listeners == 0)
                 {
                     player.sendMessage(ChatColor.DARK_RED + GetMessage.getMsg("NoListeners"));
+                }
+                if (Listeners > 0)
+                {
+                    player.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
                 }
             }
             if (Character.toString(message.charAt(0)).equals("!"))

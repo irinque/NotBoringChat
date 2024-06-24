@@ -36,6 +36,10 @@ public class ConfigLoader implements Runnable
             main.getConfig().set("personal-messages.color", "§b");
             main.getConfig().set("personal-messages.notification.toggle", true);
 
+            main.getConfig().set("custom-death.toggle", true);
+            main.getConfig().set("custom-death.sign", "[\uD83D\uDC80] ");
+            main.getConfig().set("custom-death.color", "§3");
+
             main.getConfig().set("message.NoPermission", "You do not have permission to use this command.");
             main.getConfig().set("message.NoListeners", "Nobody hear you, type ! before text to send message to global chat.");
             main.getConfig().set("message.PrefixSet", "Prefix successfully set.");
