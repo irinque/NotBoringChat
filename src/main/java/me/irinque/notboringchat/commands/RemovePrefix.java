@@ -19,7 +19,7 @@ public class RemovePrefix implements CommandExecutor
     {
         Player player = (Player) sender;
         Player target = plugin.getServer().getPlayer(args[0]);
-        if (player.hasPermission("removeprefix"))
+        if (player.hasPermission("notboringchat.removeprefix"))
         {
             plugin.get_config_players().set("player-data." + target.getUniqueId().toString() + ".prefix", "");
             try {

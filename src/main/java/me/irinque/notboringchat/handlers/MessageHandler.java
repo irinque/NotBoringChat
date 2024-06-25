@@ -23,7 +23,7 @@ public class MessageHandler implements Listener
         Player player = event.getPlayer();
         String playerprefix = plugin.get_config_players().getString("player-data." + player.getUniqueId().toString() + ".prefix");
         event.setCancelled(true);
-        if (!message.contains("/"))
+        if (!Character.toString(message.charAt(0)).equals("/"))
         {
             if (!Character.toString(message.charAt(0)).equals("!"))
             {

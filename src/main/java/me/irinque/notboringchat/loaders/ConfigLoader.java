@@ -14,7 +14,7 @@ public class ConfigLoader implements Runnable
 
     public void run()
     {
-        if (!get_file_config().exists())
+        if (!get_file_config().exists() || (main.getConfig().getString("custom-join.toggle") == null) || (main.getConfig().getString("local-chat.radius") == null) || (main.getConfig().getString("global-chat.world-prefix") == null) || (main.getConfig().getString("personal-messages.sign") == null) || (main.getConfig().getString("custom-death.toggle") == null) || (main.getConfig().getString("message.EmptyMessage") == null) || (main.getConfig().getString("message.Reload") == null) || (main.getConfig().getString("message.EmptyTarget") == null))
         {
             main.getConfig().set("custom-join.toggle", true);
             main.getConfig().set("custom-join.sign", "[+] ");
@@ -46,6 +46,8 @@ public class ConfigLoader implements Runnable
             main.getConfig().set("message.PrefixRemoved", "Prefix successfully removed.");
             main.getConfig().set("message.ColorSet", "Color successfully set.");
             main.getConfig().set("message.Reload", "Plugin config successfully reloaded.");
+            main.getConfig().set("message.EmptyMessage", "You can't send an empty message.");
+            main.getConfig().set("message.EmptyTarget", "Select the player to whom the message will be sent.");
             main.saveConfig();
         }
     }

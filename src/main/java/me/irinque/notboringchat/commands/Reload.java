@@ -15,7 +15,7 @@ public class Reload implements CommandExecutor
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
         Player player = (Player) sender;
-        if (player.hasPermission("reload-nbc"))
+        if (player.hasPermission("notboringchat.reload-nbc"))
         {
             plugin.reloadConfig();
             player.sendMessage(ChatColor.GREEN + GetMessage.getMsg("Reload"));

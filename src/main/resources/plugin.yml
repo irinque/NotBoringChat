@@ -16,15 +16,45 @@ commands:
     description: "Set player prefix"
     aliases:
       - sp
+    permission: notboringchat.setprefix
   removeprefix:
     description: "Remove player prefix"
     aliases:
       - rp
+    permission: notboringchat.removeprefix
   setcolor:
     description: "Set player nickname color"
     aliases:
       - sc
+    permission: notboringchat.setcolor
   reload-nbc:
     description: "Reload plugin config"
     aliases:
       - rd
+    permission: notboringchat.reload-nbc
+
+permissions:
+  notboringchat.setprefix:
+    description: Allows you tu run setprefix
+    default: op
+
+  notboringchat.removeprefix:
+    description: Allows you tu run removeprefix
+    default: op
+
+  notboringchat.setcolor:
+    description: Allows you tu run setcolor
+    default: op
+
+  notboringchat.reload-nbc:
+    description: Allows you tu run reload-nbc
+    default: op
+
+  notboringchat.*:
+    description: NotBoringChat Permissions
+    default: op
+    children:
+      notboringchat.setprefix: true
+      notboringchat.removeprefix: true
+      notboringchat.setcolor: true
+      notboringchat.reload-nbc: true

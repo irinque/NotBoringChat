@@ -20,7 +20,7 @@ public class SetPrefix implements CommandExecutor
         Player player = (Player) sender;
         Player target = plugin.getServer().getPlayer(args[0]);
         String prefix = args[1];
-        if (player.hasPermission("setprefix"))
+        if (player.hasPermission("notboringchat.setprefix"))
         {
             plugin.get_config_players().set("player-data." + target.getUniqueId().toString() + ".prefix", prefix);
             try {

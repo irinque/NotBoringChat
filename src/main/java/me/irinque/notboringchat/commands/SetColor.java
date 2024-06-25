@@ -22,7 +22,7 @@ public class SetColor implements CommandExecutor
         Player target = plugin.getServer().getPlayer(args[0]);
         String color = args[1];
 
-        if (player.hasPermission("setcolor"))
+        if (player.hasPermission("notboringchat.setcolor"))
         {
             Dictionary colormap = new Hashtable();
             colormap.put("DEFAULT", "§f");
