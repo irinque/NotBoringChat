@@ -26,43 +26,50 @@ public class Message implements CommandExecutor
         if (args.length > 0)
         {
             Player target = plugin.getServer().getPlayer(args[0]);
-            List<String> messagelist = Arrays.asList(args);
-            if (messagelist.size() > 1 & (target != null))
+            if (target != null)
             {
-                for (int i = 1; i < messagelist.size(); i++) {
-                    sb.append(messagelist.get(i));
-                    if (i < messagelist.size() - 1) {
-                        sb.append(" ");
+                List<String> messagelist = Arrays.asList(args);
+                if (messagelist.size() > 1)
+                {
+                    for (int i = 1; i < messagelist.size(); i++) {
+                        sb.append(messagelist.get(i));
+                        if (i < messagelist.size() - 1) {
+                            sb.append(" ");
+                        }
+                    }
+                    String message = sb.toString();
+
+                    String sign_personal_message = plugin.getConfig().getString("personal-messages.sign");
+                    String color_personal_message = plugin.getConfig().getString("personal-messages.color");
+                    String notification_personal_message = plugin.getConfig().getString("personal-messages.notification.toggle");
+
+                    TextComponent PlayerComponent = new TextComponent(color_personal_message + sign_personal_message + player.getDisplayName());
+                    PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
+                    TextComponent PlayerMessage = new TextComponent(color_personal_message + " -> " + target.getDisplayName() + color_personal_message + " >> " + message);
+                    player.spigot().sendMessage(PlayerComponent, PlayerMessage);
+
+                    TextComponent TargetComponent = new TextComponent(color_personal_message + sign_personal_message + player.getDisplayName() + color_personal_message);
+                    TargetComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
+                    TextComponent TargetMessage = new TextComponent(color_personal_message + " >> " + message);
+                    target.spigot().sendMessage(TargetComponent, TargetMessage);
+                    if (notification_personal_message.toString().equals("true")) {
+                        target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
                     }
                 }
-                String message = sb.toString();
-
-                String sign_personal_message = plugin.getConfig().getString("personal-messages.sign");
-                String color_personal_message = plugin.getConfig().getString("personal-messages.color");
-                String notification_personal_message = plugin.getConfig().getString("personal-messages.notification.toggle");
-
-                TextComponent PlayerComponent = new TextComponent(color_personal_message + sign_personal_message + player.getDisplayName());
-                PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
-                TextComponent PlayerMessage = new TextComponent(color_personal_message + " -> " + target.getDisplayName() + color_personal_message + " >> " + message);
-                player.spigot().sendMessage(PlayerComponent, PlayerMessage);
-
-                TextComponent TargetComponent = new TextComponent(color_personal_message + sign_personal_message + player.getDisplayName() + color_personal_message);
-                TargetComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
-                TextComponent TargetMessage = new TextComponent(color_personal_message + " >> " + message);
-                target.spigot().sendMessage(TargetComponent, TargetMessage);
-                if (notification_personal_message.toString().equals("true")) {
-                    target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);
+                else
+                {
+                    player.sendMessage(ChatColor.RED + GetMessage.getMsg("EmptyMessage"));
                 }
 
             }
             else
             {
-                player.sendMessage(ChatColor.RED + GetMessage.getMsg("EmptyMessage"));
+                player.sendMessage(ChatColor.RED + GetMessage.getMsg("EmptyTarget"));
             }
         }
         if (args.length == 0)
         {
-            player.sendMessage(ChatColor.RED + GetMessage.getMsg("EmptyTarget"));
+            player.sendMessage(ChatColor.RED + GetMessage.getMsg("SelectTarget"));
         }
         return true;
     }

@@ -20,5 +20,7 @@ public class CommandsLoader implements Runnable
         plugin.getServer().getPluginCommand("removeprefix").setTabCompleter(new RemovePrefixTabComplete());
         plugin.getServer().getPluginCommand("reload-nbc").setExecutor(new Reload());
         plugin.getServer().getPluginCommand("reload-nbc").setTabCompleter(new ReloadTabComplete());
+        plugin.getServer().getPluginCommand("mute").setExecutor(new Mute());
+        plugin.getServer().getPluginCommand("mute").setTabCompleter(new MuteTabComplete());
     }
 }

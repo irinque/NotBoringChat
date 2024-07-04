@@ -20,11 +20,12 @@ public class JoinHandler implements Listener
         String UUID = player.getUniqueId().toString();
         String is_user = String.valueOf(plugin.get_config_players().get("player-data." + UUID));
 
-        if (is_user.equals("null"))
+        if (is_user.equals("null") || plugin.get_config_players().getString("player-data." + UUID + ".mute") == null)
         {
             plugin.get_config_players().set("player-data." + UUID + ".nickname", player.getName());
             plugin.get_config_players().set("player-data." + UUID + ".prefix", "");
             plugin.get_config_players().set("player-data." + UUID + ".prefix-color", "§f");
+            plugin.get_config_players().set("player-data." + UUID + ".mute", false);
             try {
                 plugin.get_config_players().save(plugin.get_file_players());
             } catch (IOException e) {
@@ -43,7 +44,7 @@ public class JoinHandler implements Listener
         {
             String sign_join = plugin.getConfig().getString("custom-join.sign");
             String sign_color = plugin.getConfig().getString("custom-join.sign-color");
-            event.setJoinMessage(sign_color + sign_join + player.getDisplayName());;
+            event.setJoinMessage(sign_color + sign_join + player.getDisplayName());
         }
 
     }

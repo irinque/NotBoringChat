@@ -5,6 +5,7 @@ import me.irinque.notboringchat.Main;
 import me.irinque.notboringchat.getdata.GetMessage;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,73 +22,86 @@ public class MessageHandler implements Listener
     {
         String message = event.getMessage();
         Player player = event.getPlayer();
-        String playerprefix = plugin.get_config_players().getString("player-data." + player.getUniqueId().toString() + ".prefix");
+        String uuid = player.getUniqueId().toString();
+        String is_muted = plugin.get_config_players().getString("player-data." + uuid + ".mute");
         event.setCancelled(true);
-        if (!Character.toString(message.charAt(0)).equals("/"))
+
+        if (is_muted.equals("false"))
         {
-            if (!Character.toString(message.charAt(0)).equals("!"))
+            if (!Character.toString(message.charAt(0)).equals("/"))
             {
-
-                int Listeners = 0;
-                int radius_localchat = (int) plugin.getConfig().get("local-chat.radius");
-                String color_localchat = plugin.getConfig().getString("local-chat.message-color");
-                for (Player target : player.getWorld().getPlayers())
+                if (!Character.toString(message.charAt(0)).equals("!"))
                 {
-                    if (target.getLocation().distance(player.getLocation()) <= radius_localchat & !target.getUniqueId().equals(player.getUniqueId()))
+                    int Listeners = 0;
+                    int radius_localchat = (int) plugin.getConfig().get("local-chat.radius");
+                    String color_localchat = plugin.getConfig().getString("local-chat.message-color");
+                    for (Player target : player.getWorld().getPlayers())
                     {
-                        Listeners++;
-                        target.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
-                    }
+                        if (target.getLocation().distance(player.getLocation()) <= radius_localchat & !target.getUniqueId().equals(player.getUniqueId())) {
+                            Listeners++;
+                            target.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
+                        }
 
-                }
-                if (Listeners == 0)
-                {
-                    player.sendMessage(ChatColor.DARK_RED + GetMessage.getMsg("NoListeners"));
-                }
-                if (Listeners > 0)
-                {
-                    player.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
-                }
-            }
-            if (Character.toString(message.charAt(0)).equals("!"))
-            {
-                if (plugin.getConfig().get("global-chat.world-prefix").toString().equals("true"))
-                {
-                    String world_prefix_symbol = plugin.getConfig().getString("global-chat.symbol");
-                    if (player.getWorld().toString().contains("_nether")) {
-                        String world_prefix_color = plugin.getConfig().getString("global-chat.nether-color");
-                        TextComponent World = new TextComponent(world_prefix_color + world_prefix_symbol);
-                        TextComponent PlayerComponent = new TextComponent(ChatColor.WHITE + " " + player.getDisplayName());
-                        PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
-                        TextComponent Message = new TextComponent(world_prefix_color + " >> " + ChatColor.WHITE + message.substring(1));
-                        plugin.getServer().spigot().broadcast(World, PlayerComponent, Message);
                     }
-                    if (player.getWorld().toString().contains("_the_end")) {
-                        String world_prefix_color = plugin.getConfig().getString("global-chat.end-color");
-                        TextComponent World = new TextComponent(world_prefix_color + world_prefix_symbol);
-                        TextComponent PlayerComponent = new TextComponent(ChatColor.WHITE + " " + player.getDisplayName());
-                        PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
-                        TextComponent Message = new TextComponent(world_prefix_color + " >> " + ChatColor.WHITE + message.substring(1));
-                        plugin.getServer().spigot().broadcast(World, PlayerComponent, Message);
+                    if (Listeners == 0)
+                    {
+                        player.sendMessage(ChatColor.DARK_RED + GetMessage.getMsg("NoListeners"));
                     }
-                    if (!player.getWorld().toString().contains("_the_end") & !player.getWorld().toString().contains("_nether")) {
-                        String world_prefix_color = plugin.getConfig().getString("global-chat.overworld-color");
-                        TextComponent World = new TextComponent(world_prefix_color + world_prefix_symbol);
-                        TextComponent PlayerComponent = new TextComponent(ChatColor.WHITE + " " + player.getDisplayName());
-                        PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
-                        TextComponent Message = new TextComponent(world_prefix_color + " >> " + ChatColor.WHITE + message.substring(1));
-                        plugin.getServer().spigot().broadcast(World, PlayerComponent, Message);
+                    if (Listeners > 0)
+                    {
+                        player.sendMessage(color_localchat + " " + player.getDisplayName() + color_localchat + " >> " + message);
                     }
                 }
-                if (plugin.getConfig().get("global-chat.world-prefix").toString().equals("false"))
+                if (Character.toString(message.charAt(0)).equals("!"))
                 {
-                    TextComponent PlayerComponent = new TextComponent(player.getDisplayName());
-                    PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
-                    TextComponent Message = new TextComponent(ChatColor.WHITE + " >> " + ChatColor.WHITE + message.substring(1));
-                    plugin.getServer().spigot().broadcast(PlayerComponent, Message);
+                    if (plugin.getConfig().get("global-chat.world-prefix").toString().equals("true"))
+                    {
+                        String world_prefix_symbol = plugin.getConfig().getString("global-chat.symbol");
+                        if (player.getWorld().toString().contains("_nether"))
+                        {
+                            String world_prefix_color = plugin.getConfig().getString("global-chat.nether-color");
+                            TextComponent World = new TextComponent(world_prefix_color + world_prefix_symbol);
+                            TextComponent PlayerComponent = new TextComponent(ChatColor.WHITE + " " + player.getDisplayName());
+                            PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
+                            TextComponent Message = new TextComponent(world_prefix_color + " >> " + ChatColor.WHITE + message.substring(1));
+                            plugin.getServer().spigot().broadcast(World, PlayerComponent, Message);
+                            Bukkit.getLogger().info(world_prefix_symbol + " " + player.getName() + " >> " + message.substring(1));
+                        }
+                        if (player.getWorld().toString().contains("_the_end"))
+                        {
+                            String world_prefix_color = plugin.getConfig().getString("global-chat.end-color");
+                            TextComponent World = new TextComponent(world_prefix_color + world_prefix_symbol);
+                            TextComponent PlayerComponent = new TextComponent(ChatColor.WHITE + " " + player.getDisplayName());
+                            PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
+                            TextComponent Message = new TextComponent(world_prefix_color + " >> " + ChatColor.WHITE + message.substring(1));
+                            plugin.getServer().spigot().broadcast(World, PlayerComponent, Message);
+                            Bukkit.getLogger().info(world_prefix_symbol + " " + player.getName() + " >> " + message.substring(1));
+                        }
+                        if (!player.getWorld().toString().contains("_the_end") & !player.getWorld().toString().contains("_nether"))
+                        {
+                            String world_prefix_color = plugin.getConfig().getString("global-chat.overworld-color");
+                            TextComponent World = new TextComponent(world_prefix_color + world_prefix_symbol);
+                            TextComponent PlayerComponent = new TextComponent(ChatColor.WHITE + " " + player.getDisplayName());
+                            PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
+                            TextComponent Message = new TextComponent(world_prefix_color + " >> " + ChatColor.WHITE + message.substring(1));
+                            Bukkit.spigot().broadcast(World, PlayerComponent, Message);
+                            Bukkit.getLogger().info(world_prefix_symbol + " " + player.getName() + " >> " + message.substring(1));
+                        }
+                    }
+                    if (plugin.getConfig().get("global-chat.world-prefix").toString().equals("false"))
+                    {
+                        TextComponent PlayerComponent = new TextComponent(player.getDisplayName());
+                        PlayerComponent.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tell " + player.getName() + " "));
+                        TextComponent Message = new TextComponent(ChatColor.WHITE + " >> " + ChatColor.WHITE + message.substring(1));
+                        plugin.getServer().spigot().broadcast(PlayerComponent, Message);
+                    }
                 }
-            }
 
+            }
+        }
+        else
+        {
+            player.sendMessage(ChatColor.RED + GetMessage.getMsg("YouMuted"));
         }
     }
 }

@@ -14,7 +14,7 @@ public class ConfigLoader implements Runnable
 
     public void run()
     {
-        if (!get_file_config().exists() || (main.getConfig().getString("custom-join.toggle") == null) || (main.getConfig().getString("local-chat.radius") == null) || (main.getConfig().getString("global-chat.world-prefix") == null) || (main.getConfig().getString("personal-messages.sign") == null) || (main.getConfig().getString("custom-death.toggle") == null) || (main.getConfig().getString("message.EmptyMessage") == null) || (main.getConfig().getString("message.Reload") == null) || (main.getConfig().getString("message.EmptyTarget") == null))
+        if (!get_file_config().exists() || (main.getConfig().getString("custom-join.toggle") == null) || (main.getConfig().getString("local-chat.radius") == null) || (main.getConfig().getString("global-chat.world-prefix") == null) || (main.getConfig().getString("personal-messages.sign") == null) || (main.getConfig().getString("custom-death.toggle") == null) || (main.getConfig().getString("message.EmptyMessage") == null) || (main.getConfig().getString("message.Reload") == null) || (main.getConfig().getString("message.EmptyTarget") == null) || (main.getConfig().getString("message.SelectTarget") == null) || (main.getConfig().getString("message.SelectColor") == null) || (main.getConfig().getString("message.WritePrefix") == null) || (main.getConfig().getString("message.PlayerMuted") == null) || (main.getConfig().getString("message.YouMuted") == null))
         {
             main.getConfig().set("custom-join.toggle", true);
             main.getConfig().set("custom-join.sign", "[+] ");
@@ -40,14 +40,20 @@ public class ConfigLoader implements Runnable
             main.getConfig().set("custom-death.sign", "[\uD83D\uDC80] ");
             main.getConfig().set("custom-death.color", "§3");
 
-            main.getConfig().set("message.NoPermission", "You do not have permission to use this command.");
+            main.getConfig().set("message.NoPermission", "You do not have permission to use this command."); //v1.0.1
             main.getConfig().set("message.NoListeners", "Nobody hear you, type ! before text to send message to global chat.");
             main.getConfig().set("message.PrefixSet", "Prefix successfully set.");
             main.getConfig().set("message.PrefixRemoved", "Prefix successfully removed.");
             main.getConfig().set("message.ColorSet", "Color successfully set.");
-            main.getConfig().set("message.Reload", "Plugin config successfully reloaded.");
+            main.getConfig().set("message.Reload", "Plugin config successfully reloaded."); //v1.0.2
             main.getConfig().set("message.EmptyMessage", "You can't send an empty message.");
-            main.getConfig().set("message.EmptyTarget", "Select the player to whom the message will be sent.");
+            main.getConfig().set("message.EmptyTarget", "There is no player with this nickname on the server!");
+            main.getConfig().set("message.SelectTarget", "You need to select a player in the command argument."); //v1.0.3
+            main.getConfig().set("message.SelectColor", "You need to select color.");
+            main.getConfig().set("message.WritePrefix", "You need to write player prefix.");
+            main.getConfig().set("message.PlayerMuted", "The player is muted."); // v1.0.4
+            main.getConfig().set("message.PlayerUnmuted", "The player is unmuted.");
+            main.getConfig().set("message.YouMuted", "You are muted by the server administrator!");
             main.saveConfig();
         }
     }

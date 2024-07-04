@@ -51,6 +51,7 @@ public final class Main extends JavaPlugin
         Bukkit.getScheduler().runTaskAsynchronously(this, new CommandsLoader());
         Bukkit.getScheduler().runTaskAsynchronously(this, new PlayersLoader());
         getServer().getLogger().info("§a[NotBoringChat] Plugin is ready!");
+        getServer().getLogger().info("§e[NotBoringChat] WARNING: In version 1.0.4, logged-in players could lose nickname color settings and prefixes. Be careful!");
     }
 
     @Override

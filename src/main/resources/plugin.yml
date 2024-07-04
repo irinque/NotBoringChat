@@ -32,6 +32,9 @@ commands:
     aliases:
       - rd
     permission: notboringchat.reload-nbc
+  mute:
+      description: "Mute/Unmute player"
+      permission: notboringchat.mute
 
 permissions:
   notboringchat.setprefix:
@@ -50,6 +53,10 @@ permissions:
     description: Allows you tu run reload-nbc
     default: op
 
+  notboringchat.mute:
+    description: Allows you tu run mute
+    default: op
+
   notboringchat.*:
     description: NotBoringChat Permissions
     default: op
@@ -58,3 +65,4 @@ permissions:
       notboringchat.removeprefix: true
       notboringchat.setcolor: true
       notboringchat.reload-nbc: true
+      notboringchat.mute: true
